@@ -1,5 +1,5 @@
 import Component from '../lib/core/Component.js';
-import { $, $$ } from '../lib/utils/dom.js';
+import { $ } from '../lib/utils/dom.js';
 
 class TicketList extends Component {
   constructor($target, props) {
