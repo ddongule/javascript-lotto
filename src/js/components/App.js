@@ -61,12 +61,14 @@ class App extends Component {
   }
 
   calculateResult() {
+    const winners = getWinners(this.tickets.get(), this.winningNumber.get());
+    const profitPercentage = getProfitPercentage(
+      this.tickets.get().length,
+      winners
+    );
     this.result.set({
-      winners: getWinners(this.tickets.get(), this.winningNumber.get()),
-      profitPercentage: getProfitPercentage(
-        this.tickets.get().length,
-        this.result.get().winners
-      ),
+      winners,
+      profitPercentage,
     });
   }
 
