@@ -1,18 +1,31 @@
 import {
+<<<<<<< HEAD
   DUPLICATE_WINNING_NUMBER,
   HAS_A_WHITESPACE_MESSAGE,
   LESS_THAN_TICKET_PRICE_MESSAGE,
   INPUT_NOT_COMPLETED,
   EXCEED_RANGE_NUMBER,
+=======
+  HAS_A_WHITESPACE_MESSAGE,
+  LESS_THAN_TICKET_PRICE_MESSAGE,
+>>>>>>> [1단계 - 행운의 로또 미션] 그루밍(강민경) 미션 제출합니다. (#14)
 } from '../../../src/js/lib/constants/alertMessage';
 import {
   TICKET_MIN_NUMBER,
   TICKET_MAX_NUMBER,
+<<<<<<< HEAD
 } from '../../../src/js/lib/constants/lotto';
 
 context('Actions', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/');
+=======
+} from '../../../src/js/lib/constants/ticket';
+
+context('Actions', () => {
+  beforeEach(() => {
+    cy.visit('http://127.0.0.1:8080/');
+>>>>>>> [1단계 - 행운의 로또 미션] 그루밍(강민경) 미션 제출합니다. (#14)
   });
 
   it('구입 금액을 입력받아 티켓을 생성한다.', () => {
