@@ -42,9 +42,7 @@ class PaymentForm extends Component {
     }
 
     this.setTickets($moneyAmountInput.value);
-
-    event.target.elements['payment-submit'].disabled = true;
-    $moneyAmountInput.disabled = true;
+    $moneyAmountInput.value = '';
     $('.winning-number[name=first]').focus();
   }
 

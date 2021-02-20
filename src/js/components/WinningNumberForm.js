@@ -109,7 +109,7 @@ export default class WinningNumberForm extends Component {
 
     event.preventDefault();
 
-    if (this.isValid(winningNumber)) {
+    if (!this.isValid(winningNumber)) {
       this.alertByCase(winningNumber);
       return;
     }
@@ -129,7 +129,7 @@ export default class WinningNumberForm extends Component {
       this.props.tickets.get().length &&
       winningNumber.main.every(number => Number.isInteger(number)) &&
       Number.isInteger(winningNumber.bonus) &&
-      uniqueNumberSize === TICKET_NUMBERS_LENGTH
+      uniqueNumberSize === TICKET_NUMBERS_LENGTH + 1
     );
   }
 
@@ -140,11 +140,12 @@ export default class WinningNumberForm extends Component {
     ]).size;
 
     if (
-      !this.props.tickets.get().length &&
-      winningNumber.main.some(number => Number.isNaN(number)) &&
+      !this.props.tickets.get().length ||
+      winningNumber.main.some(number => Number.isNaN(number)) ||
       Number.isNaN(winningNumber.bonus)
     ) {
       alert(INPUT_NOT_COMPLETED);
+      return;
     }
 
     if (uniqueNumberSize < TICKET_NUMBERS_LENGTH) {

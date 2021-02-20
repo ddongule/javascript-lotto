@@ -12,7 +12,7 @@ import {
 
 context('Actions', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:5500/');
+    cy.visit('http://localhost:5000/');
   });
 
   it('구입 금액을 입력받아 티켓을 생성한다.', () => {
@@ -69,6 +69,7 @@ context('Actions', () => {
     });
     cy.get('.bonus-number').type(34);
     cy.get('#result-button').click();
+
     cy.get('.modal').should('be.visible');
   });
 
