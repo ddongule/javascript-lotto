@@ -5,7 +5,7 @@ import PaymentForm from './PaymentForm.js';
 import ResultModal from './ResultModal.js';
 import TicketList from './TicketList.js';
 import WinningNumberForm from './WinningNumberForm.js';
-import { getWinners } from '../lib/utils/ticket.js';
+import { getTotalPrize, getWinners } from '../lib/utils/ticket.js';
 
 class App extends Component {
   initStates() {
@@ -13,6 +13,7 @@ class App extends Component {
     this.open = new State(false);
     this.winningNumber = new State({});
     this.winners = new State({});
+    this.profitPercentage = new State(0);
   }
 
   mountTemplate() {
@@ -36,22 +37,46 @@ class App extends Component {
       open: this.open,
       winningNumber: this.winningNumber,
     });
-    new ResultModal($('.modal'));
+    new ResultModal($('.modal'), {
+      open: this.open,
+      winners: this.winners,
+      profitPercentage: this.profitPercentage,
+    });
   }
 
   subscribeStates() {
-    this.open.subscribe(this.update);
+    this.open.subscribe(this.update.bind(this));
 
     this.winningNumber.subscribe(() => {
       this.winners.set(
         getWinners(this.tickets.get(), this.winningNumber.get())
       );
-      console.log(this.winners);
+      this.profitPercentage.set(this.getProfitPercentage());
     });
   }
 
+  getProfitPercentage() {
+    const payment = this.tickets.get().length * 1000;
+
+    return Math.floor(
+      ((getTotalPrize(this.winners.get()) - payment) / payment) * 100
+    );
+  }
+
   update() {
-    $('.modal').classList.add('open');
+    if (this.open.get()) {
+      $('.modal').classList.add('open');
+    } else {
+      $('.modal').classList.remove('open');
+    }
+  }
+
+  initEvent() {
+    this.$target.addEventListener('click', ({ target }) => {
+      if (target.classList.contains('modal')) {
+        this.open.set(false);
+      }
+    });
   }
 }
 

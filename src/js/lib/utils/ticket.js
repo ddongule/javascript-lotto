@@ -52,9 +52,29 @@ export const getWinners = (tickets, winningNumber) => {
     const rank = getRank(ticket, winningNumber);
 
     if (rank !== 'loser') {
-      ticket[rank] += 1;
+      winners[rank] += 1;
     }
   });
 
   return winners;
+};
+
+const prizeAmount = {
+  first: 2000000000,
+  second: 30000000,
+  third: 1500000,
+  fourth: 50000,
+  fifth: 5000,
+};
+
+export const getTotalPrize = winners => {
+  let totalProfit = 0;
+
+  for (const winner in winners) {
+    if (Object.hasOwnProperty.call(winners, winner)) {
+      totalProfit += winners[winner] * prizeAmount[winner];
+    }
+  }
+
+  return totalProfit;
 };
