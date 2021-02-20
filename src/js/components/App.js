@@ -5,10 +5,14 @@ import PaymentForm from './PaymentForm.js';
 import ResultModal from './ResultModal.js';
 import TicketList from './TicketList.js';
 import WinningNumberForm from './WinningNumberForm.js';
+import { getWinners } from '../lib/utils/ticket.js';
 
 class App extends Component {
   initStates() {
     this.tickets = new State([]);
+    this.open = new State(false);
+    this.winningNumber = new State({});
+    this.winners = new State({});
   }
 
   mountTemplate() {
@@ -28,8 +32,26 @@ class App extends Component {
   mountChildComponents() {
     new PaymentForm($('#payment-form-wrapper'), { tickets: this.tickets });
     new TicketList($('#ticket-view-wrapper'), { tickets: this.tickets });
-    new WinningNumberForm($('#winning-number-form-wrapper'));
+    new WinningNumberForm($('#winning-number-form-wrapper'), {
+      open: this.open,
+      winningNumber: this.winningNumber,
+    });
     new ResultModal($('.modal'));
+  }
+
+  subscribeStates() {
+    this.open.subscribe(this.update);
+
+    this.winningNumber.subscribe(() => {
+      this.winners.set(
+        getWinners(this.tickets.get(), this.winningNumber.get())
+      );
+      console.log(this.winners);
+    });
+  }
+
+  update() {
+    $('.modal').classList.add('open');
   }
 }
 
