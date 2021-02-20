@@ -67,7 +67,7 @@ const prizeAmount = {
   fifth: 5000,
 };
 
-export const getTotalPrize = winners => {
+const getTotalPrize = winners => {
   let totalProfit = 0;
 
   for (const winner in winners) {
@@ -77,4 +77,10 @@ export const getTotalPrize = winners => {
   }
 
   return totalProfit;
+};
+
+export const getProfitPercentage = (ticketAmount, winners) => {
+  const payment = ticketAmount * TICKET_PRICE;
+
+  return Math.floor(((getTotalPrize(winners) - payment) / payment) * 100);
 };
